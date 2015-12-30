@@ -28,8 +28,9 @@ export const actions = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-export const addTodo = (state, { payload }) => Object.assign({}, state, {todos: [...state.todos, {text: payload, completed: false}]})
-
+export const addTodo = (state, { payload }) => {
+  return {...state, todos: [...state.todos, {text: payload, completed: false}]}
+}
 
 export const completeTodo = (state, { payload }) => {
   return Object.assign({}, state, {todos: [
@@ -40,7 +41,10 @@ export const completeTodo = (state, { payload }) => {
 }
 
 export const setVisibilityFilter = (state, { payload }) => {
-  return Object.assign({}, state, {visibilityFilter: payload})
+  return {
+    ...state,
+    visibilityFilter: payload
+  }
 }
 
 export default handleActions({
@@ -50,10 +54,6 @@ export default handleActions({
 }, {
   visibilityFilter: 'SHOW_ALL',
   todos: [{
-    text: 'Complete me!',
-    completed: false
-  }],
-  visibleTodos: [{
     text: 'Complete me!',
     completed: false
   }]

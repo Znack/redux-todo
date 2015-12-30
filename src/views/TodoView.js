@@ -19,7 +19,6 @@ const selectTodos = (todos, filter) => {
 const mapStateToProps = (state) => {
   console.log('state', state)
   return {
-    todos: state.todo.todos,
     visibleTodos: selectTodos(state.todo.todos, state.todo.visibilityFilter),
     visibilityFilter: state.todo.visibilityFilter
   }
@@ -27,17 +26,15 @@ const mapStateToProps = (state) => {
 
 class TodoView extends React.Component {
   static propTypes = {
-    todo: React.PropTypes.shape({
-      visibleTodos: React.PropTypes.arrayOf(React.PropTypes.shape({
-        text: React.PropTypes.string.isRequired,
-        completed: React.PropTypes.bool.isRequired
-      })),
-      visibilityFilter: React.PropTypes.oneOf([
-        'SHOW_ALL',
-        'SHOW_COMPLETED',
-        'SHOW_ACTIVE'
-      ]).isRequired,
-    }),
+    visibleTodos: React.PropTypes.arrayOf(React.PropTypes.shape({
+      text: React.PropTypes.string.isRequired,
+      completed: React.PropTypes.bool.isRequired
+    })),
+    visibilityFilter: React.PropTypes.oneOf([
+      'SHOW_ALL',
+      'SHOW_COMPLETED',
+      'SHOW_ACTIVE'
+    ]).isRequired,
     addTodo: React.PropTypes.func.isRequired,
     completeTodo: React.PropTypes.func.isRequired,
     setVisibilityFilter: React.PropTypes.func.isRequired
