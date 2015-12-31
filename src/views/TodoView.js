@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-class TodoView extends React.Component {
+export class TodoView extends React.Component {
   static propTypes = {
     visibleTodos: React.PropTypes.arrayOf(React.PropTypes.shape({
       text: React.PropTypes.string.isRequired,

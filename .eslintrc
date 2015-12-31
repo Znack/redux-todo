@@ -16,7 +16,6 @@
     "ReactDOM": true
   },
   "rules": {
-    "semi" : [2, "never"],
     "react-in-jsx-scope": 0
   }
 }

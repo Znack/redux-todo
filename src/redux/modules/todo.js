@@ -26,7 +26,7 @@ export const actions = {
 }
 
 // ------------------------------------
-// Reducer
+// Reducer methods
 // ------------------------------------
 export const addTodo = (state, { payload }) => {
   return {...state, todos: [...state.todos, {text: payload, completed: false}]}
@@ -47,6 +47,9 @@ export const setVisibilityFilter = (state, { payload }) => {
   }
 }
 
+// ------------------------------------
+// Reducer
+// ------------------------------------
 export default handleActions({
   [ADD_TODO]: addTodo,
   [COMPLETE_TODO]: completeTodo,
