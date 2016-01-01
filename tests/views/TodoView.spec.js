@@ -43,7 +43,6 @@ describe('(View) Todo', function () {
   })
 
   it('Should render as a <div>.', function () {
-    console.log(_component)
     expect(_component.type).to.equal('div')
   })
 
@@ -58,17 +57,31 @@ describe('(View) Todo', function () {
     const AddTodoComponent = TestUtils.findRenderedComponentWithType(_rendered, AddTodo)
 
     expect(AddTodoComponent).to.exist
+    expect(AddTodoComponent.props).to.exist
+    expect(AddTodoComponent.props.onAddClick).to.be.a('function')
   })
 
   it('Should render TodoList Component.', function () {
     const TodoListComponent = TestUtils.findRenderedComponentWithType(_rendered, TodoList)
+    console.log(TodoListComponent.props)
 
     expect(TodoListComponent).to.exist
+    expect(TodoListComponent.props).to.exist
+    expect(TodoListComponent.props.todos).to.eql([{
+      text: 'Complete me!',
+      completed: false
+    }])
+    expect(TodoListComponent.props.onTodoClick).to.be.a('function')
   })
 
   it('Should render Footer Component.', function () {
     const FooterComponent = TestUtils.findRenderedComponentWithType(_rendered, Footer)
 
     expect(FooterComponent).to.exist
+    expect(FooterComponent.props).to.exist
+    expect(FooterComponent.props.filter).to.be.equal('SHOW_ALL')
+    expect(FooterComponent.props.onFilterChange).to.be.a('function')
   })
+
+
 })

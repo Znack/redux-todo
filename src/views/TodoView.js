@@ -17,7 +17,6 @@ const selectTodos = (todos, filter) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state', state)
   return {
     visibleTodos: selectTodos(state.todo.todos, state.todo.visibilityFilter),
     visibilityFilter: state.todo.visibilityFilter
@@ -41,7 +40,6 @@ export class TodoView extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     return (
 
       <div className='container text-center'>

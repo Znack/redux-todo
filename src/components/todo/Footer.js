@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 export default class Footer extends Component {
   renderFilter (filter, name) {
     if (filter === this.props.filter) {
-      return name
+      return (<span>{name}</span>)
     }
 
     return (
