@@ -20,9 +20,9 @@ export const VisibilityFilters = {
 // ------------------------------------
 
 export const actions = {
-  addTodo: createAction(ADD_TODO, (text) => text),
-  completeTodo: createAction(COMPLETE_TODO, (index) => index),
-  setVisibilityFilter: createAction(SET_VISIBILITY_FILTER, (value) => value)
+  addTodo: createAction(ADD_TODO),
+  completeTodo: createAction(COMPLETE_TODO),
+  setVisibilityFilter: createAction(SET_VISIBILITY_FILTER)
 }
 
 // ------------------------------------
