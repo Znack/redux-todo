@@ -1,6 +1,56 @@
-import { default as reducer, actions, ADD_TODO, COMPLETE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters } from '../../../src/redux/modules/todo'
+import {
+  default as reducer,
+  actions,
+  REQUEST_TODOS,
+  RECEIVE_TODOS,
+  ADD_TODO,
+  COMPLETE_TODO,
+  SET_VISIBILITY_FILTER,
+  VisibilityFilters
+  } from '../../../src/redux/modules/todo'
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+
+const mockStore = configureMockStore([ thunk ])
 
 describe('(Action) todos actions:', () => {
+  var xhr, requests
+  beforeEach(() => {
+    xhr = sinon.useFakeXMLHttpRequest()
+    requests = []
+    xhr.onCreate = (req) => requests.push(req)
+  })
+  afterEach(() => {
+    // Like before we must clean up when tampering with globals.
+    xhr.restore()
+  })
+
+  it('should return function after REQUEST_TODOS action and call dispatch within it.', (done) => {
+    const mockTodos = [
+      {
+        userId: 1,
+        id: 2,
+        title: 'quis ut nam facilis et officia qui',
+        completed: false
+      },
+      {
+        userId: 1,
+        id: 1,
+        title: 'delectus aut autem',
+        completed: false
+      }
+    ]
+    const expectedActions = [
+      { type: REQUEST_TODOS },
+      { type: RECEIVE_TODOS, payload: mockTodos }
+    ]
+    const store = mockStore({ todos: [] }, expectedActions, done)
+    store.dispatch(actions.fetchTodos())
+    expect(requests).to.have.length(1)
+    expect(requests[0].url).to.be.equal('http://jsonplaceholder.typicode.com/todos')
+    requests[0].respond(200, {'Content-Type': 'application/json'}, JSON.stringify(mockTodos))
+  })
+
   it('should return correct ADD_TODO action', () => {
     expect(actions.addTodo('Run the tests')).to.eql({
       type: ADD_TODO,

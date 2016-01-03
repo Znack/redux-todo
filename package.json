@@ -25,6 +25,7 @@
   "dependencies": {
     "debug": "^2.2.0",
     "dotenv": "^1.2.0",
+    "es6-promise": "^3.0.2",
     "history": "^1.17.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
@@ -34,6 +35,8 @@
     "redux-actions": "^0.9.0",
     "redux-simple-router": "^1.0.0",
     "redux-thunk": "^1.0.0",
+    "superagent": "^1.6.1",
+    "superagent-promise": "^1.1.0",
     "yargs": "^3.18.0"
   },
   "devDependencies": {
@@ -72,6 +75,7 @@
     "karma-chai-as-promised": "^0.1.2",
     "karma-chai-sinon": "^0.1.5",
     "karma-coverage": "^0.5.0",
+    "karma-firefox-launcher": "^0.1.7",
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-spec-reporter": "0.0.23",
@@ -85,9 +89,11 @@
     "redux-devtools": "^3.0.0",
     "redux-devtools-dock-monitor": "^1.0.1",
     "redux-devtools-log-monitor": "^1.0.1",
+    "redux-mock-store": "0.0.4",
     "sass-loader": "^3.0.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
+    "superagent-mock": "^1.9.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.9",

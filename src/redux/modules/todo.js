@@ -1,10 +1,16 @@
 import { createAction, handleActions } from 'redux-actions'
+import superagent from 'superagent'
+import promisify from 'superagent-promise'
+
+const request = promisify(superagent, Promise)
 
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
 
+export const REQUEST_TODOS = 'REQUEST_TODOS'
+export const RECEIVE_TODOS = 'RECEIVE_TODOS'
 export const ADD_TODO = 'ADD_TODO'
 export const COMPLETE_TODO = 'COMPLETE_TODO'
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
@@ -20,6 +26,23 @@ export const VisibilityFilters = {
 // ------------------------------------
 
 export const actions = {
+  fetchTodos: () => {
+    return (dispatch) => {
+      dispatch({type: REQUEST_TODOS})
+      return request
+        .get('http://jsonplaceholder.typicode.com/todos')
+        .end()
+        .then(res => res.body)
+        .then(todos => {
+          console.log('in response', todos)
+          dispatch(actions.receiveTodos(todos))
+        })
+    }
+  },
+  receiveTodos: createAction(RECEIVE_TODOS, (todos) => {
+    if (todos instanceof Array) return todos
+    else throw new Error('Expected todos to be Array, but got: ${todos}')
+  }),
   addTodo: createAction(ADD_TODO),
   completeTodo: createAction(COMPLETE_TODO),
   setVisibilityFilter: createAction(SET_VISIBILITY_FILTER)
@@ -28,6 +51,14 @@ export const actions = {
 // ------------------------------------
 // Reducer methods
 // ------------------------------------
+export const fetchTodos = (state) => {
+  return {...state, todosIsLoading: true}
+}
+
+export const receiveTodos = (state, { payload }) => {
+  return {...state, todosIsLoading: false, todos: payload}
+}
+
 export const addTodo = (state, { payload }) => {
   return {...state, todos: [...state.todos, {text: payload, completed: false}]}
 }

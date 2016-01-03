@@ -18,6 +18,11 @@ const karmaConfig = {
   ],
   singleRun: !argv.watch,
   frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai'],
+  //client: {
+  //  mocha: {
+  //    timeout: '10000'
+  //  }
+  //},
   preprocessors: {
     [`${config.dir_test}/**/*.js`]: ['webpack']
   },

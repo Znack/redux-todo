@@ -29,7 +29,9 @@ const config = {
   compiler_enable_hmr      : false,
   compiler_globals         : {
     'React' : 'react',
-    'ReactDOM' : 'react-dom'
+    'ReactDOM' : 'react-dom',
+    'Promise': 'es6-promise' // hack for PhantomJS that doesn't support es6 promises still
+                             // and babel's pollyfil didn't help
   },
   compiler_source_maps     : true,
   compiler_hash_type       : 'hash',
