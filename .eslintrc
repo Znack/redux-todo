@@ -17,6 +17,7 @@
   },
   "rules": {
     "semi" : [2, "always"],
+    "no-trailing-spaces" : [0],
     "react-in-jsx-scope": 0
   }
 }

@@ -27,10 +27,12 @@ describe('(Component) TodoList', () => {
       todos: [
         {
           text: 'Not completed yet',
+          userId: 1,
           completed: false
         },
         {
           text: 'Completed!',
+          userId: 1,
           completed: true
         }
       ],

@@ -1,6 +1,6 @@
 import TestUtils from 'react-addons-test-utils';
 import { bindActionCreators } from 'redux';
-import { TodoView } from '../../src/views/TodoView';
+import { TodoView, mapStateToProps } from '../../src/views/TodoView';
 import AddTodo from '../../src/components/todo/AddTodo';
 import TodoList from '../../src/components/todo/TodoList';
 import Footer from '../../src/components/todo/Footer';
@@ -26,12 +26,23 @@ describe('(View) Todo', function () {
   beforeEach(function () {
     _spies = {};
     _props = {
+      users: [{
+        id: 1,
+        name: 'Vasya'
+      }, {
+        id: 2,
+        name: 'Petya'
+      }],
+      currentUser: 1,
       visibleTodos: [{
         text: 'Complete me!',
+        userId: 1,
         completed: false
       }],
       visibilityFilter: 'SHOW_ALL',
       ...bindActionCreators({
+        fetchUsers: (_spies.fetchUsers = sinon.spy()),
+        changeUser: (_spies.changeUser = sinon.spy()),
         fetchTodos: (_spies.fetchTodos = sinon.spy()),
         addTodo: (_spies.addTodo = sinon.spy()),
         completeTodo: (_spies.completeTodo = sinon.spy()),
@@ -74,6 +85,7 @@ describe('(View) Todo', function () {
     expect(TodoListComponent.props).to.exist;
     expect(TodoListComponent.props.todos).to.eql([{
       text: 'Complete me!',
+      userId: 1,
       completed: false
     }]);
     expect(TodoListComponent.props.onTodoClick).to.be.a('function');
@@ -86,5 +98,50 @@ describe('(View) Todo', function () {
     expect(FooterComponent.props).to.exist;
     expect(FooterComponent.props.filter).to.be.equal('SHOW_ALL');
     expect(FooterComponent.props.onFilterChange).to.be.a('function');
+  });
+
+  describe('mapStateToProps function', function () {
+    it('Should correctly map state to props.', function () {
+      const state = {
+        justAnotherBlock: {
+          currentUser: 2,
+          users: [{id: -1, name: 'Unreal user'}],
+          visibilityFilter: 'INCORRECT_FILTER',
+          todos: undefined
+        },
+        todo: {
+          currentUser: 2,
+          users: [
+            {id: 1, name: 'Leanne Graham'},
+            {id: 2, name: 'Ervin Howell'},
+            {id: 3, name: 'Clementine Bauch'}
+          ],
+          visibilityFilter: 'SHOW_ACTIVE',
+          todos: [
+            {text: 'First', userId: 2, completed: true},
+            {text: 'Second', userId: 1, completed: true},
+            {text: 'Third', userId: 2, completed: false},
+            {text: 'Forth', userId: 4, completed: false},
+            {text: 'Fifth', userId: 2, completed: false}
+          ]
+        }
+      };
+      const props = mapStateToProps(state);
+      console.log('mapStateToProps', props);
+
+      expect(props).to.be.eql({
+        users: [
+          {id: 1, name: 'Leanne Graham'},
+          {id: 2, name: 'Ervin Howell'},
+          {id: 3, name: 'Clementine Bauch'}
+        ],
+        currentUser: 2,
+        visibleTodos: [
+          {text: 'Third', userId: 2, completed: false},
+          {text: 'Fifth', userId: 2, completed: false}
+        ],
+        visibilityFilter: 'SHOW_ACTIVE'
+      });
+    });
   });
 });
