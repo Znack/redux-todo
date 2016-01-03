@@ -33,8 +33,9 @@ export const actions = {
         .get('http://jsonplaceholder.typicode.com/todos')
         .end()
         .then(res => res.body)
+        .then(todos => todos.map(todo => { return {text: todo.title, completed: todo.completed} }))
+        .then(todos => todos.slice(0, 5))
         .then(todos => {
-          console.log('in response', todos)
           dispatch(actions.receiveTodos(todos))
         })
     }
@@ -82,13 +83,12 @@ export const setVisibilityFilter = (state, { payload }) => {
 // Reducer
 // ------------------------------------
 export default handleActions({
+  [REQUEST_TODOS]: fetchTodos,
+  [RECEIVE_TODOS]: receiveTodos,
   [ADD_TODO]: addTodo,
   [COMPLETE_TODO]: completeTodo,
   [SET_VISIBILITY_FILTER]: setVisibilityFilter
 }, {
   visibilityFilter: 'SHOW_ALL',
-  todos: [{
-    text: 'Complete me!',
-    completed: false
-  }]
+  todos: []
 })

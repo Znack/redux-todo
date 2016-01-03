@@ -32,6 +32,7 @@ describe('(View) Todo', function () {
       }],
       visibilityFilter: 'SHOW_ALL',
       ...bindActionCreators({
+        fetchTodos: (_spies.fetchTodos = sinon.spy()),
         addTodo: (_spies.addTodo = sinon.spy()),
         completeTodo: (_spies.completeTodo = sinon.spy()),
         setVisibilityFilter: (_spies.setVisibilityFilter = sinon.spy())
@@ -53,6 +54,11 @@ describe('(View) Todo', function () {
     expect(h1.textContent).to.match(/React Redux Starter Kit's Todo/)
   })
 
+  it('Should dispatch fetchTodos action.', function () {
+    _spies.dispatch.should.have.been.called
+    _spies.fetchTodos.should.have.been.called
+  })
+
   it('Should render AddTodo Component.', function () {
     const AddTodoComponent = TestUtils.findRenderedComponentWithType(_rendered, AddTodo)
 
@@ -63,7 +69,6 @@ describe('(View) Todo', function () {
 
   it('Should render TodoList Component.', function () {
     const TodoListComponent = TestUtils.findRenderedComponentWithType(_rendered, TodoList)
-    console.log(TodoListComponent.props)
 
     expect(TodoListComponent).to.exist
     expect(TodoListComponent.props).to.exist

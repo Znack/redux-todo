@@ -42,7 +42,7 @@ describe('(Action) todos actions:', () => {
     ]
     const expectedActions = [
       { type: REQUEST_TODOS },
-      { type: RECEIVE_TODOS, payload: mockTodos }
+      { type: RECEIVE_TODOS, payload: mockTodos.map(todo => { return {text: todo.title, completed: todo.completed} }) }
     ]
     const store = mockStore({ todos: [] }, expectedActions, done)
     store.dispatch(actions.fetchTodos())
@@ -77,10 +77,7 @@ describe('(Reducer) todos reducers:', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).to.eql({
       visibilityFilter: 'SHOW_ALL',
-      todos: [{
-        text: 'Complete me!',
-        completed: false
-      }]
+      todos: []
     })
   })
 

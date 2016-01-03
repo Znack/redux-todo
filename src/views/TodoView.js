@@ -35,8 +35,13 @@ export class TodoView extends React.Component {
       'SHOW_ACTIVE'
     ]).isRequired,
     addTodo: React.PropTypes.func.isRequired,
+    fetchTodos: React.PropTypes.func.isRequired,
     completeTodo: React.PropTypes.func.isRequired,
     setVisibilityFilter: React.PropTypes.func.isRequired
+  }
+
+  componentDidMount () {
+    this.props.fetchTodos()
   }
 
   render () {
