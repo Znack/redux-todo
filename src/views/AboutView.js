@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 
 export class AboutView extends React.Component {
   render () {
@@ -9,8 +9,8 @@ export class AboutView extends React.Component {
         <Link to='/'>Back To Home View</Link>
         <Link to='/todo'>Go To Todo View</Link>
       </div>
-    )
+    );
   }
 }
 
-export default AboutView
+export default AboutView;

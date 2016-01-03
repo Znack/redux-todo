@@ -1,27 +1,27 @@
-import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { actions, VisibilityFilters } from '../redux/modules/todo'
-import AddTodo from '../components/todo/AddTodo'
-import TodoList from '../components/todo/TodoList'
-import Footer from '../components/todo/Footer'
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
+import { actions, VisibilityFilters } from '../redux/modules/todo';
+import AddTodo from '../components/todo/AddTodo';
+import TodoList from '../components/todo/TodoList';
+import Footer from '../components/todo/Footer';
 
 const selectTodos = (todos, filter) => {
   switch (filter) {
     case VisibilityFilters.SHOW_ALL:
-      return todos
+      return todos;
     case VisibilityFilters.SHOW_COMPLETED:
-      return todos.filter(todo => todo.completed)
+      return todos.filter(todo => todo.completed);
     case VisibilityFilters.SHOW_ACTIVE:
-      return todos.filter(todo => !todo.completed)
+      return todos.filter(todo => !todo.completed);
   }
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     visibleTodos: selectTodos(state.todo.todos, state.todo.visibilityFilter),
     visibilityFilter: state.todo.visibilityFilter
-  }
-}
+  };
+};
 
 export class TodoView extends React.Component {
   static propTypes = {
@@ -38,10 +38,10 @@ export class TodoView extends React.Component {
     fetchTodos: React.PropTypes.func.isRequired,
     completeTodo: React.PropTypes.func.isRequired,
     setVisibilityFilter: React.PropTypes.func.isRequired
-  }
+  };
 
   componentDidMount () {
-    this.props.fetchTodos()
+    this.props.fetchTodos();
   }
 
   render () {
@@ -61,8 +61,8 @@ export class TodoView extends React.Component {
         <Link to='/'>Go To Home View</Link>
         <Link to='/about'>Go To About View</Link>
       </div>
-    )
+    );
   }
 }
 
-export default connect(mapStateToProps, actions)(TodoView)
+export default connect(mapStateToProps, actions)(TodoView);

@@ -1,20 +1,20 @@
-import webpack from 'webpack'
-import config from '../../config'
-import _debug from 'debug'
+import webpack from 'webpack';
+import config from '../../config';
+import _debug from 'debug';
 
-const debug = _debug('app:webpack:production')
+const debug = _debug('app:webpack:production');
 
 export default (webpackConfig) => {
-  debug('Create configuration.')
+  debug('Create configuration.');
 
   if (config.compiler_source_maps) {
-    debug('Source maps enabled for production.')
-    webpackConfig.devtool = 'source-map'
+    debug('Source maps enabled for production.');
+    webpackConfig.devtool = 'source-map';
   } else {
-    debug('Source maps are disabled in production.')
+    debug('Source maps are disabled in production.');
   }
 
-  debug('Apply UglifyJS plugin.')
+  debug('Apply UglifyJS plugin.');
   webpackConfig.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -22,7 +22,7 @@ export default (webpackConfig) => {
         dead_code: true
       }
     })
-  )
+  );
 
-  return webpackConfig
-}
+  return webpackConfig;
+};
