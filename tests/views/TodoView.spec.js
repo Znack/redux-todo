@@ -127,7 +127,6 @@ describe('(View) Todo', function () {
         }
       };
       const props = mapStateToProps(state);
-      console.log('mapStateToProps', props);
 
       expect(props).to.be.eql({
         users: [

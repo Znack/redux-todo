@@ -5,7 +5,8 @@ import {
   RECEIVE_USERS,
   REQUEST_TODOS,
   RECEIVE_TODOS,
-  ADD_TODO,
+  REQUEST_ADD_TODO,
+  RESPOND_ADD_TODO,
   COMPLETE_TODO,
   SET_VISIBILITY_FILTER,
   VisibilityFilters
@@ -106,18 +107,30 @@ describe('(Action) todos actions:', () => {
       { type: REQUEST_TODOS },
       { type: RECEIVE_TODOS, payload: mockTodos.map(todo => { return {text: todo.title, completed: todo.completed, userId: todo.userId}; }) }
     ];
-    const store = mockStore({ todos: [] }, expectedActions, done);
+    const store = mockStore({ currentUser: 1, todos: [] }, expectedActions, done);
     store.dispatch(actions.fetchTodos());
     expect(requests).to.have.length(1);
     expect(requests[0].url).to.be.equal('http://jsonplaceholder.typicode.com/todos');
     requests[0].respond(200, {'Content-Type': 'application/json'}, JSON.stringify(mockTodos));
   });
 
-  it('should return correct ADD_TODO action', () => {
-    expect(actions.addTodo('Run the tests')).to.eql({
-      type: ADD_TODO,
-      payload: 'Run the tests'
-    });
+  it('should return function after ADD_TODO action and call dispatch within it.', (done) => {
+    const mockTodo = {
+      userId: 1,
+      id: 201,
+      title: 'quis ut nam facilis et officia qui',
+      completed: false
+    };
+    const expectedActions = [
+      { type: REQUEST_ADD_TODO },
+      { type: RESPOND_ADD_TODO, payload: mockTodo
+      }
+    ];
+    const store = mockStore({ currentUser: 1, todos: [] }, expectedActions, done);
+    store.dispatch(actions.addTodo());
+    expect(requests).to.have.length(1);
+    expect(requests[0].url).to.be.equal('http://jsonplaceholder.typicode.com/todos');
+    requests[0].respond(200, {'Content-Type': 'application/json'}, JSON.stringify(mockTodo));
   });
 
   it('should return correct COMPLETE_TODO action', () => {
