@@ -1,37 +1,23 @@
-import { createAction, handleActions } from 'redux-actions';
+const INCREMENT = 'redux-example/counter/INCREMENT';
 
-// ------------------------------------
-// Constants
-// ------------------------------------
-export const COUNTER_INCREMENT = 'COUNTER_INCREMENT';
+const initialState = {
+  count: 0
+};
 
-// ------------------------------------
-// Actions
-// ------------------------------------
-export const increment = createAction(COUNTER_INCREMENT, (value = 1) => value);
+export default function reducer(state = initialState, action = {}) {
+  switch (action.type) {
+    case INCREMENT:
+      const {count} = state;
+      return {
+        count: count + 1
+      };
+    default:
+      return state;
+  }
+}
 
-// This is a thunk, meaning it is a function that immediately
-// returns a function for lazy evaluation. It is incredibly useful for
-// creating async actions, especially when combined with redux-thunk!
-// NOTE: This is solely for demonstration purposes. In a real application,
-// you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
-// reducer take care of this logic.
-export const doubleAsync = () => {
-  return (dispatch, getState) => {
-    setTimeout(() => {
-      dispatch(increment(getState().counter));
-    }, 1000);
+export function increment() {
+  return {
+    type: INCREMENT
   };
-};
-
-export const actions = {
-  increment,
-  doubleAsync
-};
-
-// ------------------------------------
-// Reducer
-// ------------------------------------
-export default handleActions({
-  [COUNTER_INCREMENT]: (state, { payload }) => state + payload
-}, 1);
+}
