@@ -31,10 +31,7 @@ export const mapStateToProps = (state) => {
   };
 };
 
-@connect(
-  mapStateToProps,
-  {...todoModule.actions, initializeWithKey })
-export default class Todo extends Component {
+export class Todo extends Component {
   static propTypes = {
     users: React.PropTypes.arrayOf(React.PropTypes.shape({
       id: React.PropTypes.number.isRequired,
@@ -88,3 +85,6 @@ export default class Todo extends Component {
     );
   }
 }
+
+// do not use connect as decorator because for tests we have to be able export Todo class separately
+export default connect(mapStateToProps, {...todoModule.actions, initializeWithKey })(Todo);

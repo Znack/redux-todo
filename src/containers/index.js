@@ -1,6 +1,6 @@
 export App from './App/App';
 export Chat from './Chat/Chat';
-export Todo from './Todo/Todo';
+export { default as Todo } from './Todo/Todo';
 export Home from './Home/Home';
 export Widgets from './Widgets/Widgets';
 export About from './About/About';

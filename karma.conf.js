@@ -7,7 +7,7 @@ module.exports = function (config) {
 
     singleRun: !!process.env.CONTINUOUS_INTEGRATION,
 
-    frameworks: [ 'mocha' ],
+    frameworks: [ 'mocha' , 'chai-sinon', 'chai-as-promised', 'chai'],
 
     files: [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
@@ -25,7 +25,10 @@ module.exports = function (config) {
       require("karma-mocha"),
       require("karma-mocha-reporter"),
       require("karma-phantomjs-launcher"),
-      require("karma-sourcemap-loader")
+      require("karma-sourcemap-loader"),
+      require("karma-chai"),
+      require("karma-chai-as-promised"),
+      require("karma-chai-sinon"),
     ],
 
     webpack: {
